@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import "./Dealers.css";
 import "../assets/style.css";
 import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
 
 
 const PostReview = () => {
@@ -12,13 +13,16 @@ const PostReview = () => {
   const [year, setYear] = useState("");
   const [date, setDate] = useState("");
   const [carmodels, setCarmodels] = useState([]);
+  const navigate = useNavigate();
 
   let curr_url = window.location.href;
   let root_url = curr_url.substring(0,curr_url.indexOf("postreview"));
+  console.log("Roooo", root_url)
   let params = useParams();
   let id =params.id;
   let dealer_url = root_url+`djangoapp/dealer/${id}`;
   let review_url = root_url+`djangoapp/add_review`;
+  //let review_url = root_url+`djangoapp/postreview/${id}`;
   let carmodels_url = root_url+`djangoapp/get_cars`;
 
   const postreview = async ()=>{
@@ -47,7 +51,7 @@ const PostReview = () => {
       "car_year": year,
     });
 
-    console.log(jsoninput);
+    console.log(review_url);
     const res = await fetch(review_url, {
       method: "POST",
       headers: {
@@ -57,8 +61,10 @@ const PostReview = () => {
   });
 
   const json = await res.json();
+  console.log("fgdgg", json);
   if (json.status === 200) {
-      window.location.href = window.location.origin+"/dealer/"+id;
+    navigate(`/dealer/${id}`);
+      //window.location.href = window.location.origin+"/dealer/"+id;
   }
 
   }

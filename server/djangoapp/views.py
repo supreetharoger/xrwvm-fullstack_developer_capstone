@@ -116,7 +116,6 @@ def get_dealerships(request, state="All"):
 # def get_dealer_details(request, dealer_id):
 # ...
 def get_dealer_details(request, dealer_id):
-    print("PPPPPPPPPPPP", dealer_id)
     if(dealer_id):
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
@@ -130,10 +129,12 @@ def get_dealer_details(request, dealer_id):
 # ...
 
 def add_review(request):
-    if(request.user.is_anonymous == False):
+    print("POPPPPPPPPPPPPPP", request.user)
+    if(request.user.is_authenticated == False):
         data = json.loads(request.body)
         try:
             response = post_review(data)
+            print("RESSSSSSSSSSSSSSS", response)
             return JsonResponse({"status":200})
         except:
             return JsonResponse({"status":401,"message":"Error in posting review"})
@@ -147,8 +148,8 @@ def get_dealer_reviews(request, dealer_id):
         reviews = get_request(endpoint)
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
-            print(response)
-            review_detail['sentiment'] = response['sentiment']
+            if(response):
+                review_detail['sentiment'] = response['sentiment']
         return JsonResponse({"status":200,"reviews":reviews})
     else:
         return JsonResponse({"status":400,"message":"Bad Request"})
