@@ -48,7 +48,7 @@ def login_user(request):
     # Try to check if provide credential can be authenticated
     user = authenticate(username=username, password=password)
     data = {"userName": username}
-    if user is not None:
+    if user is not None: 
         # If user is valid, call login method to login current user
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
@@ -80,16 +80,16 @@ def registration(request):
     email = data['email']
     username_exist = False
     # email_exist = False
-    try:
+    try: 
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except:
+    except: 
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
 
     # If it is a new user
-    if not username_exist:
+    if not username_exist: 
         # Create user in auth_user table
         user = User.objects.create_user(
                                             username=username,
@@ -113,7 +113,7 @@ def registration(request):
 # ...
 # Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 def get_dealerships(request, state="All"): 
-    if(state == "All"):
+    if(state == "All"): 
         endpoint = "/fetchDealers"
     else:
         endpoint = "/fetchDealers/"+state
@@ -130,7 +130,7 @@ def get_dealerships(request, state="All"):
 # def get_dealer_details(request, dealer_id):
 # ...
 def get_dealer_details(request, dealer_id):  
-    if(dealer_id):
+    if(dealer_id): 
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
         print("Dealership", dealership)
@@ -150,19 +150,22 @@ def add_review(request):
             response = post_review(data)
             return JsonResponse({"status": 200})
         except:
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse({
+                                    "status": 401,
+                                    "message": "Error in posting review"
+                                })
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
 
 
 def get_dealer_reviews(request, dealer_id): 
     # if dealer id has been provided
-    if(dealer_id):
+    if(dealer_id): 
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
-            if(response):
+            if(response): 
                 review_detail['sentiment'] = response['sentiment']
         return JsonResponse({"status": 200, "reviews": reviews})
     else:

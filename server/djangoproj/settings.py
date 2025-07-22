@@ -29,7 +29,7 @@ SECRET_KEY =\
 DEBUG = True
 
 ALLOWED_HOSTS = [
-                    'localhost', 
+                    'localhost',
                     'https://iris0287-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
                 ]
 
@@ -70,8 +70,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'frontend/static'),
             os.path.join(BASE_DIR, 'frontend/build'),
-            os.path.join(BASE_DIR, 'frontend/build/static'),
-            
+            os.path.join(BASE_DIR, 'frontend/build/static'),  
         ],
         'APP_DIRS': True,
         'OPTIONS': {
