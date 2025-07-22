@@ -79,11 +79,11 @@ def registration(request):
     email = data['email']
     username_exist = False
     # email_exist = False
-    try: 
+    try:
         # Check if user already exists
         User.objects.get(username=username)
         username_exist = True
-    except: 
+    except:
         # If not, simply log this is a new user
         logger.debug("{} is new user".format(username))
 
@@ -101,7 +101,7 @@ def registration(request):
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
         return JsonResponse(data)
-    else :
+    else:
         data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)
 
@@ -110,7 +110,9 @@ def registration(request):
 # a list of dealerships
 # def get_dealerships(request):
 # ...
-# Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
+# Update the `get_dealerships` 
+# render list of dealerships all by default, 
+# particular state if state is passed
 def get_dealerships(request, state="All"):
     if (state == "All"):
         endpoint = "/fetchDealers"
@@ -143,10 +145,10 @@ def get_dealer_details(request, dealer_id):
 # ...
 
 def add_review(request):
-    if (request.user.is_authenticated == False):
+    if (!request.user.is_authenticated):
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
         except:
             return JsonResponse({
@@ -159,7 +161,7 @@ def add_review(request):
 
 def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
-    if(dealer_id):
+    if (dealer_id):
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
