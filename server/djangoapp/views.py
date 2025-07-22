@@ -47,7 +47,7 @@ def login_user(request):
     # Try to check if provide credential can be authenticated
     user = authenticate(username=username, password=password)
     data = {"userName": username}
-    if user is not None:  
+    if user is not None:
         # If user is valid, call login method to login current user
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
@@ -88,7 +88,7 @@ def registration(request):
         logger.debug("{} is new user".format(username))
 
     # If it is a new user
-    if not username_exist: 
+    if not username_exist:
         # Create user in auth_user table
         user = User.objects.create_user(
                                             username=username,
