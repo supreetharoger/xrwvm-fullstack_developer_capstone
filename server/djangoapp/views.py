@@ -1,6 +1,6 @@
 # Uncomment the required imports before adding the code
 
-from django.shortcuts import render
+# from django.shortcuts import render
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 # from django.shortcuts import get_object_or_404, render, redirect
@@ -25,8 +25,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 def get_cars(request):
     count = CarMake.objects.filter().count()
-    print(count)
-    if(count == 0): 
+    if (count == 0):
         initiate()
     car_models = CarModel.objects.select_related('car_make')
     cars = []
@@ -48,7 +47,7 @@ def login_user(request):
     # Try to check if provide credential can be authenticated
     user = authenticate(username=username, password=password)
     data = {"userName": username}
-    if user is not None: 
+    if user is not None:  
         # If user is valid, call login method to login current user
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
@@ -112,8 +111,8 @@ def registration(request):
 # def get_dealerships(request):
 # ...
 # Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
-def get_dealerships(request, state="All"): 
-    if(state == "All"): 
+def get_dealerships(request, state="All"):
+    if (state == "All"):
         endpoint = "/fetchDealers"
     else:
         endpoint = "/fetchDealers/"+state
@@ -129,8 +128,8 @@ def get_dealerships(request, state="All"):
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
 # ...
-def get_dealer_details(request, dealer_id):  
-    if(dealer_id): 
+def get_dealer_details(request, dealer_id):
+    if (dealer_id):
         endpoint = "/fetchDealer/"+str(dealer_id)
         dealership = get_request(endpoint)
         print("Dealership", dealership)
@@ -143,8 +142,8 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request):
 # ...
 
-def add_review(request): 
-    if(request.user.is_authenticated == False):
+def add_review(request):
+    if (request.user.is_authenticated == False):
         data = json.loads(request.body)
         try:
             response = post_review(data)
@@ -158,14 +157,14 @@ def add_review(request):
         return JsonResponse({"status": 403, "message": "Unauthorized"})
 
 
-def get_dealer_reviews(request, dealer_id): 
+def get_dealer_reviews(request, dealer_id):
     # if dealer id has been provided
-    if(dealer_id): 
+    if(dealer_id):
         endpoint = "/fetchReviews/dealer/"+str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
             response = analyze_review_sentiments(review_detail['review'])
-            if(response): 
+            if (response):
                 review_detail['sentiment'] = response['sentiment']
         return JsonResponse({"status": 200, "reviews": reviews})
     else:
