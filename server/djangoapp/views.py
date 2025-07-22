@@ -145,7 +145,7 @@ def get_dealer_details(request, dealer_id):
 # ...
 
 def add_review(request):
-    if (!request.user.is_authenticated):
+    if not request.user.is_authenticated:
         data = json.loads(request.body)
         try:
             post_review(data)
