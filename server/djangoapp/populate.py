@@ -60,13 +60,13 @@ def initiate():
         "car_make": car_make_instances[2]
       },
       {
-        "name": "A5", 
+        "name": "A5",
         "type": "SUV",
         "year": 2023,
         "car_make": car_make_instances[2]
       },
       {
-        "name": "A6", 
+        "name": "A6",
         "type": "SUV",
         "year": 2023,
         "car_make": car_make_instances[2]
@@ -78,7 +78,7 @@ def initiate():
         "car_make": car_make_instances[3]
       },
       {
-        "name": "Carnival", 
+        "name": "Carnival",
         "type": "SUV",
         "year": 2023,
         "car_make": car_make_instances[3]
@@ -90,7 +90,7 @@ def initiate():
         "car_make": car_make_instances[3]
       },
       {
-        "name": "Corolla", 
+        "name": "Corolla",
         "type": "Sedan",
         "year": 2023,
         "car_make": car_make_instances[4]
@@ -102,7 +102,7 @@ def initiate():
         "car_make": car_make_instances[4]
       },
       {
-        "name": "Kluger", 
+        "name": "Kluger",
         "type": "SUV",
         "year": 2023,
         "car_make": car_make_instances[4]
@@ -111,4 +111,9 @@ def initiate():
     ]
 
     for data in car_model_data:
-        CarModel.objects.create(name=data['name'], car_make=data['car_make'], type=data['type'], year=data['year'])
+        CarModel.objects.create(
+                                    name=data['name'],
+                                    car_make=data['car_make'],
+                                    type=data['type'],
+                                    year=data['year']
+                                )
